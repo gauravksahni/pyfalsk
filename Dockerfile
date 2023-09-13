@@ -8,4 +8,4 @@ EXPOSE 500
 CMD python ./app.py
 
 #docker build --buld-arg tag=slim-bullseye -t py-flask . 
-#pass the arg
+#pass the arg.
