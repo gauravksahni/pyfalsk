@@ -1,5 +1,4 @@
-ARG tag
-FROM python:$tag
+FROM python:slim-bullseye
 LABEL maintainer=Gaurav
 WORKDIR /app
 COPY . .
