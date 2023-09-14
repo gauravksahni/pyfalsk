@@ -9,7 +9,7 @@ pipeline {
     stages{
         stage('Clean the workspace'){
             steps{
-                cleanWs()
+                
             }
         }
         stage('Build the image'){
