@@ -1,14 +1,24 @@
 pipeline {
     agent any 
+    environment {
+        GITHUB_CREDS = credentials('github-pyflask-app')
+        DOCKER_HUB_USR = credentials('dockerhub')
+        APP_NAME = 'pyflask2'
+        IMAGE_NAME = "${DOCKER_HUB_USR}" + "/" + "${APP_NAME}" + ":" + "${BUILD_NUMBER}"
+    }
     stages{
-        stage('Build'){
+        stage('Clean the workspace'){
             steps{
-                echo "Building"
+                cleanWs()
+                
             }
         }
-        stage('Test'){
+        stage('Build the image'){
             steps{
-                echo "Testing"
+                script{
+                    sh 'docker build $IMAGE_NAME .'
+                    sh 'docker image ls'
+                }
             }
         }
         stage('Deploy'){
