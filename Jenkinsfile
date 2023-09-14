@@ -9,7 +9,7 @@ pipeline {
     stages{
         stage('Clean the workspace'){
             steps{
-                
+                echo "Do nothing..."
             }
         }
         stage('Build the image'){
