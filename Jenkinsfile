@@ -26,4 +26,16 @@ pipeline {
             }
         }
     }
+    post {
+        failure {
+            script {
+                currentBuild.displayName = "#${currentBuild.id}|FAILURE"
+            }
+        }
+        success {
+            script{
+                currentBuild.displayName = "#${currentBuild.id}|SUCCESS"
+            }
+        }
+    }
 }
