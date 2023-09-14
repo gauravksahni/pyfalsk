@@ -34,12 +34,13 @@ pipeline {
         failure {
             script {
                 currentBuild.displayName = "#${currentBuild.id}|FAILED"
+                cleanWs()
             }
         }
         success {
             script {
                 currentBuild.displayName = "#${currentBuild.id}|SUCCESS"
-                cleanWs()
+                
             }
         }
     }
