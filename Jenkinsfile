@@ -2,21 +2,25 @@ pipeline {
     agent any 
     environment {
         GITHUB_CREDS = credentials('github-pyflask-app')
-        APP_NAME = "pyflask2"
-        DOCKER_HUB_USR = "gauravkb"
+        DOCKER_HUB_USR = credentials('dockerhub')
+        APP_NAME = 'pyflask2'
         IMAGE_NAME = "${DOCKER_HUB_USR}" + "/" + "${APP_NAME}" + ":" + "${BUILD_NUMBER}"
     }
+    parameters{
+        string(name: 'greeting', defaultValue: 'Hello, Welcome to Jenkins Pipeline', description: 'How should I greet the world?')
+    }
+
     stages{
         stage('Clean the workspace'){
             steps{
-                echo "Do nothing..."
+                echo "${params.greeting}"
             }
         }
         stage('Build the image'){
             steps{
                 script{
                     sh 'docker build -t $IMAGE_NAME .'
-                    sh 'ls -ltrh'
+                    sh 'docker image ls'
                 }
             }
         }
@@ -29,12 +33,13 @@ pipeline {
     post {
         failure {
             script {
-                currentBuild.displayName = "#${currentBuild.id}|FAILURE"
+                currentBuild.displayName = "#${currentBuild.id}|FAILED"
             }
         }
         success {
-            script{
+            script {
                 currentBuild.displayName = "#${currentBuild.id}|SUCCESS"
+                cleanWs()
             }
         }
     }
