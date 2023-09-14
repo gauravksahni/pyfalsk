@@ -16,7 +16,7 @@ pipeline {
             steps{
                 script{
                     sh 'docker build -t $IMAGE_NAME .'
-                    sh 'docker image ls'
+                    sh 'ls -ltrh'
                 }
             }
         }
